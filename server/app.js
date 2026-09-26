@@ -9,6 +9,9 @@ const cors = require('cors')
 const { rateLimit } = require('express-rate-limit')
 
 const app = express()
+// Behind Vercel's (and Render's) proxy: without this, req.ip is the proxy's
+// address and every visitor shares one rate-limit bucket.
+app.set('trust proxy', 1)
 const server = new ApolloServer({
 	typeDefs,
 	resolvers,
