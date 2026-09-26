@@ -50,7 +50,7 @@ Welcome to Video Game Hub — a community platform for gamers to discover games,
 ## Usage
 
 - Visit [http://localhost:3002](http://localhost:3002) in your browser
-- Live demo: [https://video-gaming-hub.onrender.com](https://video-gaming-hub.onrender.com)
+- Live demo: [https://game-hub-bkness.vercel.app](https://game-hub-bkness.vercel.app)
 
 ## Screenshots
 
