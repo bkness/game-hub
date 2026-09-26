@@ -1,47 +1,10 @@
-require('dotenv').config()
 const express = require('express')
 const path = require('path')
-const { ApolloServer } = require('@apollo/server')
-const { expressMiddleware } = require('@apollo/server/express4')
-const { authMiddleware } = require('./utils/auth')
-const { typeDefs, resolvers } = require('./schemas')
-const db = require('./config/connection')
-const cors = require('cors')
-const { rateLimit } = require('express-rate-limit')
-const app = express()
+const { app, ready, db } = require('./app')
+
 const PORT = process.env.PORT || 3001
-const server = new ApolloServer({
-	typeDefs,
-	resolvers,
-})
 
-const limiter = rateLimit({
-	windowMs: 15 * 60 * 1000,
-	max: 100,
-	standardHeaders: true,
-	legacyHeaders: false,
-})
-
-const logger = (req, res, next) => {
-	console.log(`${req.method} request to ${req.url}`)
-	next()
-}
-
-const startApolloServer = async () => {
-	await server.start()
-
-	app.use(express.urlencoded({ extended: true }))
-	app.use(express.json())
-	app.use(cors())
-	app.use(limiter)
-	app.use(logger)
-	app.use(
-		'/graphql',
-		expressMiddleware(server, {
-			context: authMiddleware,
-		})
-	)
-
+ready.then(() => {
 	// if we're in production, serve client/dist as static assets
 	if (process.env.NODE_ENV === 'production') {
 		app.use(express.static(path.join(__dirname, '../client/dist')))
@@ -57,6 +20,4 @@ const startApolloServer = async () => {
 			console.log(`Use GraphQL at http://localhost:${PORT}/graphql`)
 		})
 	})
-}
-
-startApolloServer()
+})
