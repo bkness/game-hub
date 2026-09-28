@@ -28,6 +28,8 @@
 		"@fortawesome/react-fontawesome": "^3.3.0",
 		"@mapbox/node-pre-gyp": "^2.0.3",
 		"@mui/material": "^9.0.0",
+		"@vercel/analytics": "^2.0.1",
+		"@vercel/speed-insights": "^2.0.0",
 		"bcrypt": "^6.0.0",
 		"express-rate-limit": "^8.5.0",
 		"react-icons": "^5.6.0",
